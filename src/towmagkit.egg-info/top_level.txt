@@ -1,3 +1,0 @@
-ishihara-fortranwrappers
-ishiharautils
-towmagkit
