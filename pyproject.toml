@@ -1,7 +1,7 @@
 [project]
 name = "towmagkit"
 version = "0.1.0"
-description = "A modular Python toolkit for processing marine towed magnetometer data"
+description = "toolkit for processing marine towed magnetometer data"
 readme = "README.md"
 requires-python = ">=3.11"
 license = {text = "MIT"}
