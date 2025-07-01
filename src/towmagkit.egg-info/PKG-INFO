@@ -1,3 +1,28 @@
+Metadata-Version: 2.4
+Name: towmagkit
+Version: 0.1.0
+Summary: A modular Python toolkit for processing marine towed magnetometer data
+License: MIT
+Keywords: magnetometer,marine geophysics,IGRF,preprocessing,navigation
+Classifier: Intended Audience :: Science/Research
+Classifier: Topic :: Scientific/Engineering :: Earth Sciences
+Classifier: Programming Language :: Python :: 3
+Requires-Python: >=3.11
+Description-Content-Type: text/markdown
+Requires-Dist: geopy>=2.4.1
+Requires-Dist: matplotlib>=3.10.3
+Requires-Dist: pandas>=2.3.0
+Requires-Dist: plotly>=6.1.2
+Requires-Dist: ppigrf>=2.1.0
+Requires-Dist: pygmt>=0.15.0
+Requires-Dist: rdp>=0.8
+Requires-Dist: rioxarray>=0.19.0
+Requires-Dist: ruff>=0.11.13
+Requires-Dist: scipy>=1.15.3
+Requires-Dist: seaborn>=0.13.2
+Requires-Dist: tqdm>=4.67.1
+Requires-Dist: xarray>=2025.4.0
+
 # TowMagkit
 
 **TowMagkit** is a Python-based processing suite for marine towed total-field magnetometer data. It supports **cesium and proton precession magnetometers**, and provides end-to-end workflows from raw logs to geophysically corrected, publication-ready outputs. Built-in compatibility with GMT/x2sys makes it suitable for integration with existing geophysical toolchains.
@@ -252,7 +277,7 @@ This allows Step 6 (diurnal variation correction) to be performed even without `
 
 ```bash
 examples/GS24/
-├── Export.G-880.gs24-day*.txt     # Raw log
+├── Export.G-880.gs24-day1.txt     # Raw log
 ├── dv/                            # Diurnal variation files (.min and .obsc)
 ├── splittedTRK_*/
 │   ├── main_tracks/               # Long segments
