@@ -52,17 +52,12 @@ def main():
             else:
                 print(f"[WARNING] Skipping missing directory: {base_path}")
 
-    print("\n[DEBUG] Input dirs to search:")
-    for p, c in input_dirs_str:
-        print(f"  Cruise {c}: {p}")
-
     multi_inputs = [(Path(p).expanduser(), n) for p, n in input_dirs_str]
     output_dir = Path(output_dir_str).expanduser()
 
     lla_dir = output_dir / "llaconverted"
     merged_lsd = output_dir / "merged.lsd"
     mapping_csv = output_dir / "line_index_map.csv"
-    # lncor_file = output_dir / "merged.lncor"
 
     lla_converter = LLAConverter()
     lsd_converter = LSDConverter()
@@ -76,9 +71,6 @@ def main():
             output_dir=lla_dir,
             extension="*.trk",
         )
-
-    print(f"[DEBUG] Checking .lla files in: {lla_dir}")
-    print(list(lla_dir.glob("*.lla")))
 
     print(" - Step 2: Converting .lla → .lsd and merging")
 
