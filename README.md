@@ -301,5 +301,5 @@ examples/GS24/
 
 ## License
 
-TowMagkit is released under the **MIT License**.
+TowMagKit is released under the **MIT License**.
 Please cite appropriately when using for academic or publication purposes.
