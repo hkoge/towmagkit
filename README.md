@@ -22,7 +22,7 @@ Optional but recommended: [uv](https://github.com/astral-sh/uv) for fast depende
 
 
 1. **Download the package**
-   Either clone from [GitHub]([https://doi.org/xxxxxxx](https://github.com/hkoge/towmagkit.git) or download the ZIP archive from our [Zenodo release](https://doi.org/xxxxxxx):
+   Either clone from GitHub [https://github.com/hkoge/towmagkit.git](https://github.com/hkoge/towmagkit.git) or download the ZIP archive from our [Zenodo release](https://doi.org/xxxxxxx):
 
 ```bash
 # Option 1: GitHub
@@ -39,15 +39,15 @@ cd towmagkit
    We strongly recommend using a **virtual environment** to avoid permission issues (especially on Linux/Mac).
 
 ```bash
-# Option 1: Using pip
-python3 -m venv .venv # Set up virtual environment
-source .venv/bin/activate   # Windows: .venv\Scripts\activate
-pip install -e .[full]
-
-# Option 2: Or using uv (recommended)
+# Option 1: Using uv (recommended)
 uv sync
 source .venv/bin/activate 
 uv pip install -e .[full] # Install in editable mode (allows local source edits to take effect immediately)
+
+# Option 2: Using pip
+python3 -m venv .venv # Set up virtual environment
+source .venv/bin/activate   # Windows: .venv\Scripts\activate
+pip install -e .
 ```
 
 
@@ -114,16 +114,6 @@ source ~/.bashrc
 ```bash
 python3 -c "import pygmt; print(pygmt.__version__)"
 ```
-
----
-
-## Pipeline Scripts
-
-| Script                 | Description                                                             |
-| ---------------------- | ----------------------------------------------------------------------- |
-| `run-raw2corrected.py` | Full processing pipeline: raw logs → corrected `.trk` segments          |
-| `run-crossover.py`     | Apply Ishihara crossover leveling and export pre/post gridded anomalies |
-
 ---
 
 ## Directory Structure
