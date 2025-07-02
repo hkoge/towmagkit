@@ -15,7 +15,7 @@ Outputs from the segmentation step are formatted for compatibility with GMT/x2sy
 - Crossover leveling based on the Ishihara method
 ---
 
-## Installation in Ubuntu
+## Installation
 
 Requires: Python >= 3.10
 Optional but recommended: [uv](https://github.com/astral-sh/uv) for fast dependency syncing
