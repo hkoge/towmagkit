@@ -11,91 +11,6 @@
 
 Outputs from the segmentation step are formatted for compatibility with GMT/x2sys. While TowMagKit natively applies crossover correction via the Ishihara method, x2sys-based workflows are also supported through optional bundled bash scripts, allowing seamless integration into existing processing pipelines if desired.
 
-## Pipeline Scripts
-
-| Script                 | Description                                                             |
-| ---------------------- | ----------------------------------------------------------------------- |
-| `run-raw2corrected.py` | Full processing pipeline: raw logs → corrected `.trk` segments          |
-| `run-crossover.py`     | Apply Ishihara crossover leveling and export pre/post gridded anomalies |
-
----
-
-## Directory Structure
-
-```
-project-root/
-├── src/
-│   ├── towmagkit/              # Core processing modules
-│   ├── ishihara-fortranwrappers/  # Fortran binaries and source
-│   └── ishiharautils/          # Python wrappers/utilities for crossover method
-├── scripts/                    # Pipeline scripts
-├── gmt_scripts/                # Optional: Bash tools for x2sys/GMT mapping
-├── examples/                   # Sample cruise data (GS24 etc.)
-├── paper/                      # Draft manuscript and figures
-└── pyproject.toml              # Build metadata
-```
-
----
-## Raw-to-Corrected Workflow Overview
-
-The run-raw2corrected.py script executes a complete preprocessing pipeline to convert raw magnetometer logs into corrected, line-segmented total-field anomaly datasets ready for analysis or crossover correction. The workflow applies sensor-specific raw file conversion, smoothing, layback correction, IGRF subtraction, and diurnal variation removal, before splitting the data into discrete straight-line tracks.
-
-### Key Modules in "run-raw2corrected.py"
-| Module                | Purpose                                                                                       |
-| --------------------- | --------------------------------------------------------------------------------------------- |
-| `protonraw2anmorg.py` | Convert proton magnetometer logs: `*.dat` → `*.dat.anmorg`                                    |
-| `cesiumraw2anmorg.py` | Convert G-880/Cesium logs: `*.txt` → `*.txt.anmorg`                                           |
-| `anmorg1min.py`       | Downsample `.anmorg` files to 1-minute resolution                                             |
-| `cablecorr.py`        | Apply layback correction to compensate GPS-to-sensor offset                                   |
-| `igrfcorrection.py`   | Subtract IGRF reference field using [ppigrf](https://github.com/IAGA-VMOD/ppigrf.git) by IAGA |
-| `dv_min2obsc.py`      | Convert `.min` format to `.obsc` (1-min ASCII format used for removing diurnal variation)                  |
-| `dvcorrection.py`     | Remove diurnal variation using observatory data                                               |
-| `trksplitter.py`      | Track segmentation using Ramer–Douglas–Peucker algorithm                                      |
-
----
-
-## Crossover Correction (Ishihara method)
-
-The crossover correction module (Ishihara method) is implemented via Python + Fortran wrappers:
-
-* Fortran binaries live in `src/ishihara-fortranwrappers/`
-* Python interfaces and utilities live in `src/ishiharautils/`
-
-Run `./compile.sh` in the Fortran directory to build required binaries.
-
-### Key Modules in "run-crossover.py"
-| Module                                 | Purpose                                                                     |
-| -------------------------------------- | --------------------------------------------------------------------------- |
-| `llaconverter.py`                      | Converts `.trk` segments to `.lla` (line-wise anomaly w/ coordinates)       |
-| `lsdconverter.py`                      | Converts `.lla` > `.lsd`, appends cumulative distance                       |
-| `lflcconvert.py`                       | Runs Fortran lflc on `.lsd`, `.stat`, `.lwt` > outputs corrected data nd visualized files (`.lncor`, `.csv`, `.nc`, `.tif`, `.html`)|
-| `ishiharahoupipeline.py`               | Orchestrates all steps in the Ishihara crossover correction           |
-
-### Note on parameter setting
-
-```python
-runner.run_fortran(
-    dt0=6.0,      # crossover search radius [km]
-    m2=3,         # window size for long-wavelength smoothing
-    m1=6,         # window size for short-wavelength filtering
-    f1=0.7,       # smoothing factor (long)
-    f2=0.1,       # smoothing factor (short)
-    sclmt=5.0     # shift limit [nT] – max correction allowed
-)
-```
-Note: These values can be tuned to suit the noise level and track geometry of your survey.
-```python
-runner.plot(
-    spacing="0.002",    # grid resolution (deg)
-    tension=0.65,       # interpolation tension (0 = spline)
-    maxradius="2k",     # max search radius for gridding
-    netcdfexport=True   # export as NetCDF & GeoTIFF
-)
-```
-Note: For full control over gridding options, refer to the PyGMT surface documentation.
-
-
-
 ---
 
 ## Installation
@@ -199,6 +114,93 @@ python3 -c "import pygmt; print(pygmt.__version__)"
 ```
 
 ---
+
+## Pipeline Scripts
+
+| Script                 | Description                                                             |
+| ---------------------- | ----------------------------------------------------------------------- |
+| `run-raw2corrected.py` | Full processing pipeline: raw logs → corrected `.trk` segments          |
+| `run-crossover.py`     | Apply Ishihara crossover leveling and export pre/post gridded anomalies |
+
+---
+
+## Directory Structure
+
+```
+project-root/
+├── src/
+│   ├── towmagkit/              # Core processing modules
+│   ├── ishihara-fortranwrappers/  # Fortran binaries and source
+│   └── ishiharautils/          # Python wrappers/utilities for crossover method
+├── scripts/                    # Pipeline scripts
+├── gmt_scripts/                # Optional: Bash tools for x2sys/GMT mapping
+├── examples/                   # Sample cruise data (GS24 etc.)
+├── paper/                      # Draft manuscript and figures
+└── pyproject.toml              # Build metadata
+```
+
+---
+## Raw-to-Corrected Workflow Overview
+
+The run-raw2corrected.py script executes a complete preprocessing pipeline to convert raw magnetometer logs into corrected, line-segmented total-field anomaly datasets ready for analysis or crossover correction. The workflow applies sensor-specific raw file conversion, smoothing, layback correction, IGRF subtraction, and diurnal variation removal, before splitting the data into discrete straight-line tracks.
+
+### Key Modules in "run-raw2corrected.py"
+| Module                | Purpose                                                                                       |
+| --------------------- | --------------------------------------------------------------------------------------------- |
+| `protonraw2anmorg.py` | Convert proton magnetometer logs: `*.dat` → `*.dat.anmorg`                                    |
+| `cesiumraw2anmorg.py` | Convert G-880/Cesium logs: `*.txt` → `*.txt.anmorg`                                           |
+| `anmorg1min.py`       | Downsample `.anmorg` files to 1-minute resolution                                             |
+| `cablecorr.py`        | Apply layback correction to compensate GPS-to-sensor offset                                   |
+| `igrfcorrection.py`   | Subtract IGRF reference field using [ppigrf](https://github.com/IAGA-VMOD/ppigrf.git) by IAGA |
+| `dv_min2obsc.py`      | Convert `.min` format to `.obsc` (1-min ASCII format used for removing diurnal variation)                  |
+| `dvcorrection.py`     | Remove diurnal variation using observatory data                                               |
+| `trksplitter.py`      | Track segmentation using Ramer–Douglas–Peucker algorithm                                      |
+
+---
+
+## Crossover Correction (Ishihara method)
+
+The crossover correction module (Ishihara method) is implemented via Python + Fortran wrappers:
+
+* Fortran binaries live in `src/ishihara-fortranwrappers/`
+* Python interfaces and utilities live in `src/ishiharautils/`
+
+Run `./compile.sh` in the Fortran directory to build required binaries.
+
+### Key Modules in "run-crossover.py"
+| Module                                 | Purpose                                                                     |
+| -------------------------------------- | --------------------------------------------------------------------------- |
+| `llaconverter.py`                      | Converts `.trk` segments to `.lla` (line-wise anomaly w/ coordinates)       |
+| `lsdconverter.py`                      | Converts `.lla` > `.lsd`, appends cumulative distance                       |
+| `lflcconvert.py`                       | Runs Fortran lflc on `.lsd`, `.stat`, `.lwt` > outputs corrected data nd visualized files (`.lncor`, `.csv`, `.nc`, `.tif`, `.html`)|
+| `ishiharahoupipeline.py`               | Orchestrates all steps in the Ishihara crossover correction           |
+
+### Note on parameter setting
+
+```python
+runner.run_fortran(
+    dt0=6.0,      # crossover search radius [km]
+    m2=3,         # window size for long-wavelength smoothing
+    m1=6,         # window size for short-wavelength filtering
+    f1=0.7,       # smoothing factor (long)
+    f2=0.1,       # smoothing factor (short)
+    sclmt=5.0     # shift limit [nT] – max correction allowed
+)
+```
+Note: These values can be tuned to suit the noise level and track geometry of your survey.
+```python
+runner.plot(
+    spacing="0.002",    # grid resolution (deg)
+    tension=0.65,       # interpolation tension (0 = spline)
+    maxradius="2k",     # max search radius for gridding
+    netcdfexport=True   # export as NetCDF & GeoTIFF
+)
+```
+Note: For full control over gridding options, refer to the PyGMT surface documentation.
+
+
+
+
 
 ### Diurnal Variation Correction (`dv/` folder)
 This example uses shore-based 1-minute data from **Kakioka Magnetic Observatory** in `.min` format.
