@@ -54,7 +54,7 @@ The run-raw2corrected.py script executes a complete preprocessing pipeline to co
 
 ---
 
-## Crossover Correction
+## Crossover Correction (Ishihara method)
 
 The crossover correction module (Ishihara method) is implemented via Python + Fortran wrappers:
 
