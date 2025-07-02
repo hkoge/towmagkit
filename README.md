@@ -1,12 +1,14 @@
 # TowMagKit
 **TowMagKit** is a Python-based processing suite for marine towed total-field magnetometer data, supporting both cesium and proton precession sensors. It provides an end-to-end workflow from raw sensor logs to geophysically corrected, publication-ready outputs, including:
 
+`run-raw2corrected.py`: Full processing pipeline: raw logs → corrected .trk segments
 - Conversion of raw logs to intermediate ASCII format  
 - Moving-average smoothing  
 - Cable-layback correction to align magnetometer and GPS positions  
 - IGRF subtraction via IAGA-VMOD/ppigrf  
 - Diurnal-variation correction using observatory data  
-- Segmentation into straight survey legs and turning intervals  
+- Segmentation into straight survey legs and turning intervals
+`run-crossover.py`: Apply Ishihara crossover leveling and export pre/post gridded anomalies
 - Crossover leveling based on the Ishihara method
 
 Outputs from the segmentation step are formatted for compatibility with GMT/x2sys. While TowMagKit natively applies crossover correction via the Ishihara method, x2sys-based workflows are also supported through optional bundled bash scripts, allowing seamless integration into existing processing pipelines if desired.
