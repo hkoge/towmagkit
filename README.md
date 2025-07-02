@@ -9,10 +9,7 @@
 - Segmentation into straight survey legs and turning intervals  
 - Crossover leveling based on the Ishihara method
 
-All outputs are formatted for compatibility with GMT/x2sys. While TowMagKit natively applies crossover correction via the Ishihara method, x2sys-based workflows are also supported through optional bundled bash scripts, allowing seamless integration into existing processing pipelines if desired.
-
-
-
+Outputs from the segmentation step are formatted for compatibility with GMT/x2sys. While TowMagKit natively applies crossover correction via the Ishihara method, x2sys-based workflows are also supported through optional bundled bash scripts, allowing seamless integration into existing processing pipelines if desired.
 
 ## Pipeline Scripts
 
