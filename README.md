@@ -48,7 +48,7 @@ The run-raw2corrected.py script executes a complete preprocessing pipeline to co
 | `anmorg1min.py`       | Downsample `.anmorg` files to 1-minute resolution                                             |
 | `cablecorr.py`        | Apply layback correction to compensate GPS-to-sensor offset                                   |
 | `igrfcorrection.py`   | Subtract IGRF reference field using [ppigrf](https://github.com/IAGA-VMOD/ppigrf.git) by IAGA |
-| `dv_min2obsc.py`      | Convert `.min` format to `.obsc` (1-min ASCII format used for DV correction)                  |
+| `dv_min2obsc.py`      | Convert `.min` format to `.obsc` (1-min ASCII format used for removing diurnal variation)                  |
 | `dvcorrection.py`     | Remove diurnal variation using observatory data                                               |
 | `trksplitter.py`      | Track segmentation using Ramer–Douglas–Peucker algorithm                                      |
 
