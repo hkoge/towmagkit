@@ -1,4 +1,4 @@
-# TowMagKit
+# TowMagKit v1.0.0
 **TowMagKit** is a Python-based processing suite for marine towed total-field magnetometer data, supporting both cesium and proton precession sensors. It provides an end-to-end workflow from raw sensor logs to geophysically corrected, publication-ready outputs, including:
 
 ### `run-raw2corrected.py` Full processing pipeline. raw logs → corrected .trk segments
