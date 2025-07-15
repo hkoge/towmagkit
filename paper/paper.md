@@ -20,7 +20,7 @@ authors:
     affiliation: 1
   - name: Seshiro Furuyama
     orcid: 0000-0002-5723-2027
-    affiliation: 1
+    affiliation: 1 2
   - name: Seitaro Ono
     orcid: 0009-0002-4555-7462
     equal-contrib: true
@@ -28,16 +28,18 @@ authors:
   - name: Kyoko Okino
     orcid: 0009-0002-4555-7462
     equal-contrib: true
-    affiliation: 2
+    affiliation: 3
 affiliations:
   - name: "Geological Survey of Japan, National Institute of Advanced Industrial Science and Technology (AIST), 1-1-1 Higashi, Tsukuba, Ibaraki 305-8567, Japan"
     index: 1
     ror: 01703db54
+  - name: "Marine Resources and Energy, Tokyo University of Marine Science and Technology, 4-5-7 Konan, Minato-ku, Tokyo 108-8477, Japan"
+    index: 2
+    ror: 048nxq511
   - name: "Atmosphere and Ocean Research Institute, The University of Tokyo, 5-1-5, Kashiwanoha, Kashiwa-shi, Chiba 277-8564, Japan"
     index: 2
     ror: 057zh3y96
-
-date: 2025-07-01
+date: 2025-07-15
 bibliography: paper.bib
 ---
 
