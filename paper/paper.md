@@ -37,7 +37,7 @@ affiliations:
     index: 2
     ror: 048nxq511
   - name: "Atmosphere and Ocean Research Institute, The University of Tokyo, 5-1-5, Kashiwanoha, Kashiwa-shi, Chiba 277-8564, Japan"
-    index: 2
+    index: 3
     ror: 057zh3y96
 date: 15 July 2025
 bibliography: paper.bib
